@@ -1,4 +1,4 @@
-package com.springBoot.RESTfulDemo;
+package com.springBoot.restFulDemo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

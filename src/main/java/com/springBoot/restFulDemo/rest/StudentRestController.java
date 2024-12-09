@@ -35,21 +35,29 @@ public class StudentRestController {
 
     // define endpoint for "/students/{studentId}" - return student at index
 
-    @GetMapping("/students/{studentId}")
-    public Student getStudent(@PathVariable String studentId){
-        // Generic try-catch exception handling implemented by Course's student
-        int id;
-        try{
-            id = Integer.parseInt(studentId);
-        } catch (Exception e){
-            throw new StudentNotFoundException("Student id invalid - " + studentId);
-        }
+//    @GetMapping("/students/{studentId}")
+//    public Student getStudent(@PathVariable String studentId){
+//        // Generic try-catch exception handling implemented by Course's student
+//        int id;
+//        try{
+//            id = Integer.parseInt(studentId);
+//        } catch (Exception e){
+//            throw new StudentNotFoundException("Student id invalid - " + studentId);
+//        }
+//
+//        //check the studentId again list size
+//        if( (id >= theStudents.size()) || (id<0)){
+//            throw new StudentNotFoundException("Student id not found - " + studentId);
+//        }
+//        return theStudents.get(id);
+//    }
 
-        //check the studentId again list size
-        if( (id >= theStudents.size()) || (id<0)){
+    @GetMapping("/students/{studentId}")
+    public Student getStudent(@PathVariable int studentId) {
+        if ((studentId >= theStudents.size()) || (studentId < 0)) {
             throw new StudentNotFoundException("Student id not found - " + studentId);
         }
-        return theStudents.get(id);
+        return theStudents.get(studentId);
     }
 
 
@@ -66,5 +74,20 @@ public class StudentRestController {
 
         // return ResponseEntity
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    // add another exception handler ... to catch any exception (catch all)
+
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
+
+        StudentErrorResponse error = new StudentErrorResponse();
+
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        // return ResponseEntity
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
  }

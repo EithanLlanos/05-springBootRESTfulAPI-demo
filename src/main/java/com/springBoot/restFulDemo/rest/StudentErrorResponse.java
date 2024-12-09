@@ -1,5 +1,7 @@
 package com.springBoot.restFulDemo.rest;
 
+
+//So, actually this is like a placeholder for the exception handlers JSONS we are going to use, like, since all the objects can be converted to JSON using Jackson, this is how we are going to handle exceptions.
 public class StudentErrorResponse {
 
     private int status;
